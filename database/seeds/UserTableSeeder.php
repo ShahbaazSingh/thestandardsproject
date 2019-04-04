@@ -40,5 +40,87 @@ class UserTableSeeder extends Seeder
         'role' => 1,
         ));
 
+        //student inputs
+
+        User::create(array(
+            'name'     => 'Sally Rogers',
+            'username' => 'studentone',
+            'email'    => 'one@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Burt Hagard',
+            'username' => 'studenttwo',
+            'email'    => 'two@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Josiah Nigel',
+            'username' => 'studentthree',
+            'email'    => 'three@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Shahbaaz Singh',
+            'username' => 'studentfour',
+            'email'    => 'four@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Harry Styles',
+            'username' => 'studentfive',
+            'email'    => 'five@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Channing Tatum',
+            'username' => 'studentsix',
+            'email'    => 'six@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Ryan Reynolds',
+            'username' => 'studentseven',
+            'email'    => 'seven@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Ian Lampert',
+            'username' => 'studenteight',
+            'email'    => 'eight@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Alaya Hunter',
+            'username' => 'studentnine',
+            'email'    => 'nine@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
+        User::create(array(
+            'name'     => 'Jenny Plexazeusnamastesamsara',
+            'username' => 'studentten',
+            'email'    => 'ten@email.com',
+            'password' => Hash::make('passwordone'),
+            'role' => 0,
+            ));
+
     }
 }

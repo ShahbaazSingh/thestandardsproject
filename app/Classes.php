@@ -12,4 +12,9 @@ class Classes extends Model
     protected $fillable = [
         'subject','room'
     ];  
+
+    public function users(){
+        return $this->belongsToMany('App\User', 'class_user', 'class_id', 'user_id');
+    }
+
 }

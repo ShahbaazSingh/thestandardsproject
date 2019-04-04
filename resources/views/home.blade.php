@@ -33,12 +33,13 @@
                         
                             $classes = App\Classes::where('teacher_id', Auth::user()->id)->get();
                             foreach ($classes as $class) {
+                            
                             echo '<tr>';
                             echo '<td><a href="#">', $class['class_id'], '</a></td>';
                             echo '<td>', $class['subject'], '</td>';
                             echo '<td>', $class['grade'], '</td>';
-                            echo '<td>', $class['starts'], '</td>';
-                            echo '<td>', $class['ends'], '</td>';
+                            echo '<td>', date('H:i:s', strtotime($class['starts_at'])), '</td>';
+                            echo '<td>', date('H:i:s', strtotime($class['ends_at'])), '</td>';
                             echo '<td>', $class['school'], '</td>';
                             echo '<td>', $class['room'], '</td>';
                             echo '</tr>';
@@ -46,7 +47,36 @@
                             
                         }
                         else if(Auth::user()->role == 0){
-                            echo 'Student\'s Class List';
+                            
+                            echo '<table class = "table"><title>Student\'s Class List</title>
+                                <thead class = "thead-dark">
+                                <tr>
+                                    <th>Class Id</th>
+                                    <th>Subject</th>
+                                    <th>Grade</th>
+                                    <th>Starts</th>
+                                    <th>Ends</th>
+                                    <th>School</th>
+                                    <th>Room</th>
+                                </tr>
+                                </thead>
+                            '; 
+                        
+                            $user = App\User::find(Auth::user()->id);
+                            foreach ($user->classes as $class) {
+                            
+                            echo '<tr>';
+                            echo '<td><a href="#">', $class['class_id'], '</a></td>';
+                            echo '<td>', $class['subject'], '</td>';
+                            echo '<td>', $class['grade'], '</td>';
+                            echo '<td>', date('H:i:s', strtotime($class['starts_at'])), '</td>';
+                            echo '<td>', date('H:i:s', strtotime($class['ends_at'])), '</td>';
+                            echo '<td>', $class['school'], '</td>';
+                            echo '<td>', $class['room'], '</td>';
+                            echo '</tr>';
+                            }
+                            
+
                         }
                     ?>
                 </div>
