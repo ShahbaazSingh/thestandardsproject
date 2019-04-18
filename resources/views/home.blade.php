@@ -35,7 +35,7 @@
                             foreach ($classes as $class) {
                             
                             echo '<tr>';
-                            echo '<td><a href="#">', $class['class_id'], '</a></td>';
+                            echo '<td><a href="pageone/'.$class['class_id'].'">', $class['class_id'], '</a></td>';
                             echo '<td>', $class['subject'], '</td>';
                             echo '<td>', $class['grade'], '</td>';
                             echo '<td>', date('H:i:s', strtotime($class['starts_at'])), '</td>';
@@ -44,10 +44,62 @@
                             echo '<td>', $class['room'], '</td>';
                             echo '</tr>';
                             }
+
+                            echo '</table>';
+                            echo '<br></br>';
+
+                            echo '<p><a href="/moduleprogress">Track Module Progress</a></p>';
+                            echo '<p><a href="#">Add Intervention</a></p>';
+                            echo '<p><a href="#">Contacts List</a></p>';
                             
                         }
                         else if(Auth::user()->role == 0){
                             
+                            echo 
+                            '<div class="alert alert-success" role="alert">
+                                You Have 1 New Module!
+                            </div>
+                            ';
+
+                            echo '<h3>Module\'s List</h3>';
+                            echo '<table class="table table-bordered table-dark" style="font-size:80%"><title>Module\'s List</title>
+                                <thead class = "thead-dark">
+                                <tr>
+                                    <th>Date Assigned</th>
+                                    <th>Date Due</th>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Date Completed</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                            
+                                <tr>
+                                    <td>04-10-19</td>
+                                    <td>04-17-19</td>  
+                                    <td>Video</td>
+                                    <td><a href="/module/video/1">Long Division Video</a></td>
+                                    <td></td>
+                                    <td>In-Progress</td>
+                                </tr>
+
+                                <tr>
+                                    <td>03-12-19</td>
+                                    <td>03-19-19</td>  
+                                    <td>Multiple-Choice</td>
+                                    <td><a href="/module/mc/2">Adding Fractions</a></td>
+                                    <td>03-17-19</td>  
+                                    <td>Completed</td>
+                                </tr>
+
+                                </table>
+
+                        '; 
+
+
+                            echo '<br></br>';
+
+                            echo '<h3>Student\'s Class List</h3>';
                             echo '<table class = "table"><title>Student\'s Class List</title>
                                 <thead class = "thead-dark">
                                 <tr>
@@ -66,7 +118,7 @@
                             foreach ($user->classes as $class) {
                             
                             echo '<tr>';
-                            echo '<td><a href="#">', $class['class_id'], '</a></td>';
+                            echo '<td><a href="pageonestudent/'.$class['class_id'].'">', $class['class_id'], '</a></td>';
                             echo '<td>', $class['subject'], '</td>';
                             echo '<td>', $class['grade'], '</td>';
                             echo '<td>', date('H:i:s', strtotime($class['starts_at'])), '</td>';
@@ -78,6 +130,17 @@
                             
 
                         }
+
+                        else if(Auth::user()->role == 2){
+
+                        
+                            
+
+
+
+
+                        }
+
                     ?>
                 </div>
             </div>

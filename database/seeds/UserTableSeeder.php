@@ -122,5 +122,13 @@ class UserTableSeeder extends Seeder
             'role' => 0,
             ));
 
+            User::create(array(
+            'name'     => 'Castanza Stanza',
+            'username' => 'principleone',
+            'email'    => 'principle@email.com',
+            'password' => Hash::make('principle'),
+            'role' => 2,
+            ));
+
     }
 }

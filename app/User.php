@@ -41,4 +41,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Classes', 'class_user', 'user_id', 'class_id');
     }
 
+    public function proficiencies(){
+        return $this->belongsToMany('App\Proficiency', 'user_proficiency', 'user_id', 'proficiency_id')->withPivot('grade');
+    }
+
 }

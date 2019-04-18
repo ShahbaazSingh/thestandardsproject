@@ -17,5 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call('UserTableSeeder'); //calls the usertable
         $this->call('ClassTableSeeder'); //calls classtable
         $this->call('ClassUserTableSeeder');
+        $this->call('ProficiencyTableSeeder');
+        $this->call('UserProficiencyTableSeeder');
     }
 }
