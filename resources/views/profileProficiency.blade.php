@@ -79,7 +79,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td><input type="checkbox">Hashbrown</input></td>
+                                    <td><input type="checkbox">Richard</input></td>
                                     <td></td>  
                                     <td></td>
                                     <td>X</td>  

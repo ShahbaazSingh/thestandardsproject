@@ -15,41 +15,41 @@ class ProficiencyTableSeeder extends Seeder
         DB::table('proficiency')->delete();
 
         Proficiency::create(array(
-        'name' => 'M.6.1.1',
+        'name' => 'M.5.1.1',
         'w' => 'M',
-        'x' => '6',
+        'x' => '5',
         'y' => '1',
         'z' => '1',
         ));
 
         Proficiency::create(array(
-        'name' => 'M.6.2.1',
+        'name' => 'M.5.2.1',
         'w' => 'M',
-        'x' => '6',
+        'x' => '5',
         'y' => '2',
         'z' => '1',
         ));
 
         Proficiency::create(array(
-        'name' => 'M.6.2.2',
+        'name' => 'M.5.2.2',
         'w' => 'M',
-        'x' => '6',
+        'x' => '5',
         'y' => '2',
         'z' => '2',
         ));
 
         Proficiency::create(array(
-        'name' => 'M.6.3.1',
+        'name' => 'M.5.3.1',
         'w' => 'M',
-        'x' => '6',
+        'x' => '5',
         'y' => '3',
         'z' => '1',
         ));
 
         Proficiency::create(array(
-        'name' => 'M.6.4.1',
+        'name' => 'M.5.4.1',
         'w' => 'M',
-        'x' => '6',
+        'x' => '5',
         'y' => '4',
         'z' => '1',
         ));

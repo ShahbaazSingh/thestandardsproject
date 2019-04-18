@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Classes;
 use App\User;
+use DB;
 
 class ProfileController extends Controller
 {
@@ -29,8 +30,62 @@ class ProfileController extends Controller
     public function pageOne($classid)
     {
         $selectedClass = Classes::where('class_id', $classid)->first();
+        session()->forget('data');
+
+        $class = Classes::where('class_id', $classid)->first();
+                            $usersInClass = $class->users;
+                            $proficientCount = 0;
+                            $almostProficientCount = 0;
+                            $notProficientCount = 0;
+                            $proficientUsers = [];
+                            $notProficientUsers = [];
+                            $almostProficientUsers = [];
+                            $numUnits = DB::table('proficiency')->where('w', 'M')->count();
+                            foreach($usersInClass as $user){
+                                $average = 0;
+                                $total = 0;
+                                
+                                $result = DB::select('select up.grade 
+                                                      from user_proficiency up 
+                                                      join users u on up.user_id = u.id
+                                                      join proficiency p on up.proficiency_id = p.id
+                                                      where u.id ='.$user->id.'
+                                                      and p.w = "M"');
+                                    foreach($result as $res){
+                                        $total += $res->grade;
+                                    }
+
+                                        $average = $total/$numUnits;
+
+
+                                        if(round($average)==0){
+                                            $notProficientUsers[] = $user;
+                                            $notProficientCount++;
+                                        }
+                                        else if(round($average)==1){
+                                            $almostProficientUsers[] = $user;
+                                            $almostProficientCount++;
+                                        }
+                                        else if(round($average)==2){
+                                            $proficientUsers[] = $user;
+                                            $proficientCount++;
+                                        }
+                            }
+        $data = [
+            'notProficientUsers'=>$notProficientUsers,
+            'notProficientCount'=>$notProficientCount,
+            'almostProficientUsers'=>$almostProficientUsers,
+            'almostProficientCount'=>$almostProficientCount,
+            'proficientUsers'=>$proficientUsers,
+            'proficientCount'=>$proficientCount,
+            'classid'=>$classid
+        ];                    
+
+        session(['data' => $data]);
+
+
         if($selectedClass['teacher_id'] == Auth::user()->id)
-            return view('profile')->with('classid',$classid);
+            return view('profile')->with('data',$data);
         else
             return redirect('/');
         
@@ -38,14 +93,11 @@ class ProfileController extends Controller
 
     public function pageSubject($classid,$subject)
     {
-        $data = [
-            'class_id'=>$classid,
-            'subject'=>$subject,
-        ];
+        $data = session('data');
 
         $selectedClass = Classes::where('class_id', $classid)->first();
         if($selectedClass['teacher_id'] == Auth::user()->id)
-            return view('profileSubject')->with('data',$data);
+            return view('profileSubject')->with(compact('data','subject'));
         else
             return redirect('/');
         

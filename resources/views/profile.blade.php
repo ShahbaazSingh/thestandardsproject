@@ -25,42 +25,73 @@
                                 </thead>
                             '; 
                             //gather information about how many students are proficient in a specific subject
-                            $class = App\Classes::where('class_id', $classid)->first();
-                            $usersInClass = $class->users;
-                            $count = 0;
+                            $class = App\Classes::where('class_id', $data['classid'])->first();
+                            /*$usersInClass = $class->users;
+                            $proficientCount = 0;
+                            $almostProficientCount = 0;
+                            $notProficientCount = 0;
+                            $proficientUsers = [];
+                            $notProficientUsers = [];
+                            $almostProficientUsers = [];
+                            $numUnits = DB::table('proficiency')->where('w', 'M')->count();
                             foreach($usersInClass as $user){
-                               foreach($user->proficiencies->where('w','M') as $userProf){
-                                   
-                               }
-                            }
-                            
+                                $average = 0;
+                                $total = 0;
+                                
+                                $result = DB::select('select up.grade 
+                                                      from user_proficiency up 
+                                                      join users u on up.user_id = u.id
+                                                      join proficiency p on up.proficiency_id = p.id
+                                                      where u.id ='.$user->id.'
+                                                      and p.w = "M"');
+                                    foreach($result as $res){
+                                        $total += $res->grade;
+                                    }
+
+                                        $average = $total/$numUnits;
+
+
+                                        if(round($average)==0){
+                                            $notProficientUsers[] = $user;
+                                            $notProficientCount++;
+                                        }
+                                        else if(round($average)==1){
+                                            $almostProficientUsers[] = $user;
+                                            $almostProficientCount++;
+                                        }
+                                        else if(round($average)==2){
+                                            $proficientUsers[] = $user;
+                                            $proficientCount++;
+                                        }
+                            }*/
+
 
                             echo '<tr align="center">';
                             echo '<td align="left"><a href="'.$class['class_id'].'/math"> Math </a></td>';
-                            echo '<td>4</td>';
-                            echo '<td>6</td>';
-                            echo '<td>10</td>';
+                            echo '<td>'.$data['proficientCount'].'</td>';
+                            echo '<td>'.$data['almostProficientCount'].'</td>';
+                            echo '<td>'.$data['notProficientCount'].'</td>';
                             echo '</tr>';
 
                             echo '<tr align="center">';
                             echo '<td align="left"><a href="'.$class['class_id'].'/english"> English </a></td>';
-                            echo '<td>3</td>';
-                            echo '<td>10</td>';
-                            echo '<td>7</td>';
+                            echo '<td></td>';
+                            echo '<td></td>';
+                            echo '<td></td>';
                             echo '</tr>';
 
                             echo '<tr align="center">';
                             echo '<td align="left"><a href="'.$class['class_id'].'/science"> Science </a></td>';
-                            echo '<td>4</td>';
-                            echo '<td>15</td>';
-                            echo '<td>1</td>';
+                            echo '<td></td>';
+                            echo '<td></td>';
+                            echo '<td></td>';
                             echo '</tr>';
 
                             echo '<tr align="center">';
                             echo '<td align="left"><a href="'.$class['class_id'].'/socialstudies"> Social Studies </a></td>';
-                            echo '<td>18</td>';
-                            echo '<td>2</td>';
-                            echo '<td>0</td>';
+                            echo '<td></td>';
+                            echo '<td></td>';
+                            echo '<td></td>';
                             echo '</tr>';
 
 
