@@ -15,116 +15,57 @@
                     @endif
                     <?php
 
-                    //mock use case, func's will be added later.
+                    $units = DB::select('select * from proficiency where w="M"');
 
                         echo '<table class = "table"><title>Individual Unit Proficiency</title>
                                 <thead class = "thead-dark">
                                 <tr align="center">
-                                    <th>Name</th>
-                                    <th><button>M6.1.1</button></th>
-                                    <th><button>M6.2.1</button></th>
-                                    <th><button>M6.2.2</button></th>
-                                    <th><button>M6.3.1</button></th>
-                                    <th><button>M6.4.1</button></th>
-                                </tr>
+                                    <th>Name</th>';
+                                foreach($units as $u){
+                                echo   '<th><button>'.$u->name.'</button></th>';
+                                }
+                                
+                                '</tr>
                                 </thead>
                             '; 
                             //gather information on student proficiency in specific unit
 
                         echo '
-                                <tbody align="center">
-                                <tr>
-                                    <td><input type="checkbox">Apple</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>  
-                                    <td>X</td>
-                                    <td></td>
-                                </tr>
+                                <tbody align="left">';
+                                foreach($student as $s){
+                        echo    '<tr> 
+                                    <td><input type="checkbox"> '.$s->name.'</input></td>';
+                                    foreach($units as $u){
 
-                                <tr>
-                                    <td><input type="checkbox">Aaron</input></td>
-                                    <td>X</td>  
-                                    <td></td>
-                                    <td>X</td>  
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                      /* $result = DB::select('select up.grade 
+                                                      from user_proficiency up 
+                                                      join users u on up.user_id = u.id
+                                                      join proficiency p on up.proficiency_id = p.id
+                                                      where u.id ='.$s->id.'
+                                                      and p.id = "'.$u->id.'"'); */
 
-                                <tr>
-                                    <td><input type="checkbox">John</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>  
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                                    $result = DB::table('user_proficiency')
+                                                        ->join('users', 'user_proficiency.user_id', '=', 'users.id')
+                                                        ->join('proficiency', 'user_proficiency.proficiency_id', '=', 'proficiency.id')
+                                                        ->select('user_proficiency.grade')
+                                                        ->where([
+                                                                ['user_id', '=', $s->id],
+                                                                ['proficiency_id', '=', $u->id],
+                                                                ])
+                                                        ->first();
+                                        if($result->grade == 0)
+                                        echo '<td align="center">X</td>';
+                                        else
+                                        echo '<td align="center"></td>';
+                                    }
 
-                                <tr>
-                                    <td><input type="checkbox">Sandra</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>  
-                                    <td>X</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox">Apricot</input></td>
-                                    <td></td>  
-                                    <td>X</td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox">Richard</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>  
-                                    <td>X</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox">Ricardo</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox">Julian</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td></td>  
-                                    <td>X</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox">Noway</input></td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td>X</td>  
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td><input type="checkbox">Jose</input></td>
-                                    <td></td>  
-                                    <td>X</td>
-                                    <td></td>  
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                </tbody>
+                        echo    '</tr>';
+                            }
+                        echo    '</tbody>
                             </table>
-                        ';
+                            ';
+                                
+
 
                                 //actions to be performed
 
@@ -145,7 +86,6 @@
 
                         ';
                     
-                        //end mock
                         
                     ?>
                 </div>

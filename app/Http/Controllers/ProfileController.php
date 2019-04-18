@@ -105,15 +105,23 @@ class ProfileController extends Controller
 
     public function pageProficiency($classid,$subject,$prof)
     {
-        $data = [
-            'class_id'=>$classid,
-            'subject'=>$subject,
-            'prof'=>$prof,
-        ];
+        $data = session('data');
+
+        if($prof == 0){
+            $student = $data['notProficientUsers'];
+        }
+
+        elseif($prof == 1){
+            $student = $data['almostProficientUsers'];
+        }
+
+        elseif($prof == 2){
+            $student = $data['proficientUsers'];
+        }
 
         $selectedClass = Classes::where('class_id', $classid)->first();
         if($selectedClass['teacher_id'] == Auth::user()->id)
-            return view('profileProficiency')->with('data',$data);
+            return view('profileProficiency')->with(compact('data','subject','prof','student'));
         else
             return redirect('/');
         

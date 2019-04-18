@@ -14,7 +14,7 @@
                         </div>
                     @endif
                     <?php
-                        echo '<table class = "table"><title>Proficiency Overview</title>
+                        /*echo '<table class="table table-inverse"><title>Proficiency Overview</title>
                                 <thead class = "thead-dark">
                                 <tr align="center">
                                     <th><a href="'.$subject.'/2">Proficient</th>
@@ -22,25 +22,70 @@
                                     <th><a href="'.$subject.'/0">Not Proficient</th>
                                 </tr>
                                 </thead>
-                            '; 
+                            '; */
 
                             //gather information about how many students are proficient/almost proficient/not proficient
 
                             $pu = $data['proficientUsers'];
-                            $npu = $data['notProficientUsers'];
                             $apu = $data['almostProficientUsers'];
+                            $npu = $data['notProficientUsers'];
+                           
 
-                            foreach($pu as $x)
-                                echo $x;
-                            
+echo '<table class="table"><title>Proficiency Overview</title>
+<tr>
+<td>
+    <table class="table">
+        <thead class="table-info">
+            <tr align="center" >
+                <td><a href="'.$subject.'/2">Proficient</a></td>
+            </tr>
+        </thead>
+        <tbody>';
+            foreach($pu as $x){
+        echo'<tr align="center">
+                <td>'.$x->name.'</td>
+            </tr>';
+            }
+echo    '</tbody>
+    </table>
+</td>
+<td>
+    <table class="table">
+        <thead class="table-info">
+            <tr align="center">
+                <td><a href="'.$subject.'/1">Almost Proficient</a></td>
+            </tr>
+        </thead>
+        <tbody>';
+            foreach($apu as $x){
+        echo'<tr align="center">
+                <td>'.$x->name.'</td>
+            </tr>';
+            }
+echo     '</tbody>
+    </table>
+</td>
+<td>
+    <table class="table">
+        <thead class="table-info">
+            <tr align="center">
+                <td><a href="'.$subject.'/0">Not Proficient</a></td>
+            </tr>
+        </thead>
+        <tbody>';
+            foreach($npu as $x){
+        echo'<tr align="center">
+                <td>'.$x->name.'</td>
+            </tr>';
+            }
+        '</tbody>
+    </table>
+</td>
+</tr>
+</table>';
 
                             
-                        echo '<tr align="center">
-                             <td>Josiah</td>
-                             <td>Mell</td>
-                             <td>Apple</td>
-                             </tr>
-                             ';
+                    
 
 
                     ?>
