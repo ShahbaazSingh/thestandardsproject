@@ -21,6 +21,7 @@ class UserTableSeeder extends Seeder
         'username' => 'teacherone',
         'email'    => 'johnbeck@email.com',
         'password' => Hash::make('passwordone'),
+        'grade' => 0,
         'role' => 1,
         ));
 
@@ -29,6 +30,7 @@ class UserTableSeeder extends Seeder
         'username' => 'teachertwo',
         'email'    => 'joebiden@email.com',
         'password' => Hash::make('passwordtwo'),
+        'grade' => 0,
         'role' => 1,
         ));
 
@@ -37,6 +39,7 @@ class UserTableSeeder extends Seeder
         'username' => 'teacherthree',
         'email'    => 'ralphcohen@email.com',
         'password' => Hash::make('passwordthree'),
+        'grade' => 0,
         'role' => 1,
         ));
 
@@ -47,6 +50,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentone',
             'email'    => 'one@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -55,6 +59,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studenttwo',
             'email'    => 'two@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -63,6 +68,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentthree',
             'email'    => 'three@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -71,6 +77,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentfour',
             'email'    => 'four@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -79,6 +86,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentfive',
             'email'    => 'five@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -87,6 +95,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentsix',
             'email'    => 'six@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -95,6 +104,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentseven',
             'email'    => 'seven@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -103,6 +113,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studenteight',
             'email'    => 'eight@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -111,6 +122,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentnine',
             'email'    => 'nine@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -119,6 +131,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentten',
             'email'    => 'ten@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -127,6 +140,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studenteleven',
             'email'    => 'eleven@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -135,6 +149,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studenttwelve',
             'email'    => 'twelve@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -143,6 +158,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentthirteen',
             'email'    => 'thirteen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -151,6 +167,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentfourteen',
             'email'    => 'fourteen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));    
 
@@ -159,6 +176,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentfifteen',
             'email'    => 'fifteen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -167,6 +185,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentsixteen',
             'email'    => 'sixteen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -175,6 +194,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentseventeen',
             'email'    => 'seventeen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -183,6 +203,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studenteighteen',
             'email'    => 'eighteen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -191,6 +212,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studentnineteen',
             'email'    => 'nineteen@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -199,6 +221,7 @@ class UserTableSeeder extends Seeder
             'username' => 'studenttwenty',
             'email'    => 'twenty@email.com',
             'password' => Hash::make('passwordone'),
+            'grade' => 6,
             'role' => 0,
             ));
 
@@ -206,9 +229,10 @@ class UserTableSeeder extends Seeder
 
         User::create(array(
             'name'     => 'Castanza Stanza',
-            'username' => 'principleone',
-            'email'    => 'principle@email.com',
-            'password' => Hash::make('principle'),
+            'username' => 'principalone',
+            'email'    => 'principal@email.com',
+            'password' => Hash::make('principal'),
+            'grade' => 0,
             'role' => 2,
             ));
 

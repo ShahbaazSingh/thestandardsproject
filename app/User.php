@@ -45,4 +45,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Proficiency', 'user_proficiency', 'user_id', 'proficiency_id')->withPivot('grade');
     }
 
+    public function modules(){
+        return $this->belongsToMany('App\Module', 'user_module', 'user_id', 'module_id')->withPivot('grade','assigned','due','completed','report_link');
+    }
+
 }

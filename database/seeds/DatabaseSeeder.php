@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call('ClassUserTableSeeder');
         $this->call('ProficiencyTableSeeder');
         $this->call('UserProficiencyTableSeeder');
+        $this->call('ModuleTableSeeder');
+        $this->call('UserModuleTableSeeder');
     }
 }

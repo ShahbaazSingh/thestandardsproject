@@ -22,25 +22,32 @@ class ProfileController extends Controller
         //$this->middleware('checkuser');
     }
 
-    /**
-     * Show the profile page after clicking on class.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function pageOne($classid)
-    {
-        $selectedClass = Classes::where('class_id', $classid)->first();
-        session()->forget('data');
+
+    public function getProficiencyOverview($classid, $subject){
 
         $class = Classes::where('class_id', $classid)->first();
-                            $usersInClass = $class->users;
-                            $proficientCount = 0;
-                            $almostProficientCount = 0;
-                            $notProficientCount = 0;
-                            $proficientUsers = [];
-                            $notProficientUsers = [];
-                            $almostProficientUsers = [];
-                            $numUnits = DB::table('proficiency')->where('w', 'M')->count();
+            $usersInClass = $class->users;
+            $pCount = 0;
+            $almostPCount = 0;
+            $notPCount = 0;
+            $pUsers = [];
+            $notPUsers = [];
+            $almostPUsers = [];
+
+            $proficiencyInitial;
+            if($subject == 'Math')
+                $proficiencyInitial = 'M';
+            elseif($subject == 'English')
+                $proficiencyInitial = 'E';
+            else if($subject == 'Science')
+                $proficiencyInitial = 'Sci'; 
+            if($subject == 'Social Studies')
+                $proficiencyInitial = 'SS';     
+
+            $numUnits = DB::table('proficiency')->where('w', ''.$proficiencyInitial.'')->count();
+
+            if($numUnits != 0){
+
                             foreach($usersInClass as $user){
                                 $average = 0;
                                 $total = 0;
@@ -50,7 +57,7 @@ class ProfileController extends Controller
                                                       join users u on up.user_id = u.id
                                                       join proficiency p on up.proficiency_id = p.id
                                                       where u.id ='.$user->id.'
-                                                      and p.w = "M"');
+                                                      and p.w = "'.$proficiencyInitial.'"');
                                     foreach($result as $res){
                                         $total += $res->grade;
                                     }
@@ -59,19 +66,49 @@ class ProfileController extends Controller
 
 
                                         if(round($average)==0){
-                                            $notProficientUsers[] = $user;
-                                            $notProficientCount++;
+                                            $notPUsers[] = $user;
+                                            $notPCount++;
                                         }
                                         else if(round($average)==1){
-                                            $almostProficientUsers[] = $user;
-                                            $almostProficientCount++;
+                                            $almostPUsers[] = $user;
+                                            $almostPCount++;
                                         }
                                         else if(round($average)==2){
-                                            $proficientUsers[] = $user;
-                                            $proficientCount++;
+                                            $pUsers[] = $user;
+                                            $pCount++;
                                         }
                             }
-        $data = [
+                        }    
+
+        $package = [
+            'notPCount'=>$notPCount,
+            'notPUsers'=>$notPUsers,
+            'almostPCount'=>$almostPCount,
+            'almostPUsers'=>$almostPUsers,
+            'pUsers'=>$pUsers,
+            'pCount'=>$pCount,
+            'classid'=>$classid
+        ];            
+        
+        return $package;
+
+    }
+
+
+    /**
+     * Show the profile page after clicking on class.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function pageOne($classid)
+    {
+        session()->forget('data');
+
+        $selectedClass = Classes::where('class_id', $classid)->first();
+        
+        $data = $this->getProficiencyOverview($classid, $selectedClass['subject']);
+                            
+        /*$datag = [
             'notProficientUsers'=>$notProficientUsers,
             'notProficientCount'=>$notProficientCount,
             'almostProficientUsers'=>$almostProficientUsers,
@@ -79,7 +116,7 @@ class ProfileController extends Controller
             'proficientUsers'=>$proficientUsers,
             'proficientCount'=>$proficientCount,
             'classid'=>$classid
-        ];                    
+        ];*/                    
 
         session(['data' => $data]);
 
@@ -93,11 +130,23 @@ class ProfileController extends Controller
 
     public function pageSubject($classid,$subject)
     {
-        $data = session('data');
+
+        $selectedSubject;
+
+        if($subject == 'math')
+            $selectedSubject = 'Math';
+        elseif($subject == 'english')
+            $selectedSubject = 'English';
+        elseif($subject == 'science')
+            $selectedSubject = 'Science';  
+        elseif($subject == 'socialstudies')
+            $selectedSubject = 'Social Studies';
+
+        $data = $this->getProficiencyOverview($classid, $selectedSubject);
 
         $selectedClass = Classes::where('class_id', $classid)->first();
         if($selectedClass['teacher_id'] == Auth::user()->id)
-            return view('profileSubject')->with(compact('data','subject'));
+            return view('profileSubject')->with(compact('data','subject','classid'));
         else
             return redirect('/');
         
@@ -105,18 +154,29 @@ class ProfileController extends Controller
 
     public function pageProficiency($classid,$subject,$prof)
     {
-        $data = session('data');
+
+        $selectedSubject;
+         if($subject == 'math')
+            $selectedSubject = 'Math';
+        elseif($subject == 'english')
+            $selectedSubject = 'English';
+        elseif($subject == 'science')
+            $selectedSubject = 'Science';  
+        elseif($subject == 'socialstudies')
+            $selectedSubject = 'Social Studies';
+
+        $data = $this->getProficiencyOverview($classid, $selectedSubject);
 
         if($prof == 0){
-            $student = $data['notProficientUsers'];
+            $student = $data['notPUsers'];
         }
 
         elseif($prof == 1){
-            $student = $data['almostProficientUsers'];
+            $student = $data['almostPUsers'];
         }
 
         elseif($prof == 2){
-            $student = $data['proficientUsers'];
+            $student = $data['pUsers'];
         }
 
         $selectedClass = Classes::where('class_id', $classid)->first();
@@ -127,9 +187,18 @@ class ProfileController extends Controller
         
     }
 
-    public function moduleprogress()
+    public function moduleprogress($id)
     {
-        return view('moduleprogress');
+        $gather = [];
+        $gather = DB::select('select *
+                                    from user_module um 
+                                    where um.assigned_by ='.$id.'
+                                    order by um.assigned');
+
+        if(Auth::user()->id == $id)
+            return view('moduleprogress')->with('gather',$gather);
+        else    
+            return redirect('/');
     }
 
 

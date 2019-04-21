@@ -15,7 +15,18 @@
                     @endif
                     <?php
 
-                    $units = DB::select('select * from proficiency where w="M"');
+                    $currentProf;
+                    if($subject == 'math')
+                        $currentProf = 'M';
+                    else if($subject == 'english')
+                        $currentProf = 'E'; 
+                    else if($subject == 'science')
+                        $currentProf = 'Sci'; 
+                    else if($subject == 'socialstudies')
+                        $currentProf = 'SS';         
+                    
+
+                    $units = DB::select('select * from proficiency where w="'.$currentProf.'"');
 
                         echo '<table class = "table"><title>Individual Unit Proficiency</title>
                                 <thead class = "thead-dark">
@@ -37,13 +48,6 @@
                                     <td><input type="checkbox"> '.$s->name.'</input></td>';
                                     foreach($units as $u){
 
-                                      /* $result = DB::select('select up.grade 
-                                                      from user_proficiency up 
-                                                      join users u on up.user_id = u.id
-                                                      join proficiency p on up.proficiency_id = p.id
-                                                      where u.id ='.$s->id.'
-                                                      and p.id = "'.$u->id.'"'); */
-
                                                     $result = DB::table('user_proficiency')
                                                         ->join('users', 'user_proficiency.user_id', '=', 'users.id')
                                                         ->join('proficiency', 'user_proficiency.proficiency_id', '=', 'proficiency.id')
@@ -53,7 +57,7 @@
                                                                 ['proficiency_id', '=', $u->id],
                                                                 ])
                                                         ->first();
-                                        if($result->grade == 0)
+                                        if($result->grade == $prof)
                                         echo '<td align="center">X</td>';
                                         else
                                         echo '<td align="center"></td>';

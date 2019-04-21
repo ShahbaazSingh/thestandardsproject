@@ -31,83 +31,34 @@
                                 </thead>
                             '; 
 
-                        echo '
-                                <tbody>
-                                <tr align="center">
-                                    <td>Math</td>
-                                    <td>Shahbaaz</td>  
-                                    <td>02-10-19</td>
-                                    <td>02-17-19</td>
-                                    <td>02-16-19</td>
-                                    <td><a href="#">Link</a></td>
-                                    <td>V1</td>
-                                    <td>M6.1.1</td>
-                                    <td>87%<td>
-                                </tr>
+                        echo  '<tbody>';    
 
+                        foreach($gather as $data){
+
+                            $module = App\Module::where('module_id', $data->module_id)->first();
+                            $student = App\User::where('id', $data->user_id)->first();
+
+                            echo '
                                 <tr align="center">
-                                    <td>Math</td>
-                                    <td>Gonzalo</td>  
-                                    <td>02-10-19</td>
-                                    <td>02-17-19</td>
-                                    <td></td>
-                                    <td><a href="#">Link</a></td>
-                                    <td>V1</td>
-                                    <td>M6.1.1</td>
-                                    <td>85%<td>
+                                    <td>'.$module->subject.'</td>
+                                    <td>'.$student->name.'</td>  
+                                    <td>'.$data->assigned.'</td>
+                                    <td>'.$data->due.'</td>
+                                    <td>'.$data->completed.'</td>
+                                    <td><a href="'.$data->report_link.'">Link</a></td>
+                                    <td>'.$module->type.'</td>
+                                    <td>'.$module->proficiency.'</td>
+                                    <td>'.$data->grade.'%<td>
                                 </tr>
+                            '
+                            ;
+                        }   
                         
-                                <tr align="center">
-                                    <td>Math</td>
-                                    <td>Kristina</td>  
-                                    <td>02-10-19</td>
-                                    <td>02-17-19</td>
-                                    <td>02-16-19</td>
-                                    <td><a href="#">Link</a></td>
-                                    <td>V1</td>
-                                    <td>M6.1.1</td>
-                                    <td>93%<td>
-                                </tr>
                         
-                                <tr align="center">
-                                    <td>Math</td>
-                                    <td>Hal</td>  
-                                    <td>02-10-19</td>
-                                    <td>02-17-19</td>
-                                    <td>02-12-19</td>
-                                    <td><a href="#">Link</a></td>
-                                    <td>V1</td>
-                                    <td>M6.1.1</td>
-                                    <td>65%<td>
-                                </tr>
-                        
-                                <tr align="center">
-                                    <td>Math</td>
-                                    <td>Mar</td>  
-                                    <td>02-10-19</td>
-                                    <td>02-17-19</td>
-                                    <td>02-15-19</td>
-                                    <td><a href="#">Link</a></td>
-                                    <td>V1</td>
-                                    <td>M6.1.1</td>
-                                    <td>90%<td>
-                                </tr>
-                        
-                                <tr align="center">
-                                    <td>Math</td>
-                                    <td>Paige</td>  
-                                    <td>02-10-19</td>
-                                    <td>02-17-19</td>
-                                    <td></td>
-                                    <td><a href="#">Link</a></td>
-                                    <td>V1</td>
-                                    <td>M6.1.1</td>
-                                    <td>80%<td>
-                                </tr>
-                                </tbody>
+                        echo '</tbody>';
+                        echo '</table>';
 
                         
-                        ';
 
 
                     ?>

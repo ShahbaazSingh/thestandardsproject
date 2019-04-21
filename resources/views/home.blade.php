@@ -48,7 +48,7 @@
                             echo '</table>';
                             echo '<br></br>';
 
-                            echo '<p><a href="/moduleprogress">Track Module Progress</a></p>';
+                            echo '<p><a href="/moduleprogress/'.Auth::user()->id.'">Track Module Progress</a></p>';
                             echo '<p><a href="#">Add Intervention</a></p>';
                             echo '<p><a href="#">Contacts List</a></p>';
                             
@@ -133,9 +133,40 @@
 
                         else if(Auth::user()->role == 2){
 
-                        
+
+                            echo '<table class = "table"><title>List of Students at School</title>
+                                <thead class = "thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Class List</th>
+                                    <th>Report</th>
+                                    <th>Grade</th>
+                                        
+                                </tr>
+                                </thead>
+                            '; 
+
+
+                            $classes = App\Classes::where('school', 'PS101')->get();
+                            foreach($classes as $class){
+                                foreach($class->users as $student){
+                                    echo '
+                                        <tr align="left">
+                                            <td>'.$student->name.'</td>
+                                            <td>'.$student->username.'</td>
+                                            <td>'.$student->email.'</td>
+                                            <td><a href="#">Classes</a></td>
+                                            <td><a href="#">Link</a></td>
+                                            <td>'.$student->grade.'</td>
+                                        </tr>   
+                                    ';
+                                }
+                            }
                             
 
+                            echo '</table>';
 
 
 

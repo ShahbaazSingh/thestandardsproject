@@ -14,21 +14,11 @@
                         </div>
                     @endif
                     <?php
-                        /*echo '<table class="table table-inverse"><title>Proficiency Overview</title>
-                                <thead class = "thead-dark">
-                                <tr align="center">
-                                    <th><a href="'.$subject.'/2">Proficient</th>
-                                    <th><a href="'.$subject.'/1">Almost Proficient</th>
-                                    <th><a href="'.$subject.'/0">Not Proficient</th>
-                                </tr>
-                                </thead>
-                            '; */
-
                             //gather information about how many students are proficient/almost proficient/not proficient
 
-                            $pu = $data['proficientUsers'];
-                            $apu = $data['almostProficientUsers'];
-                            $npu = $data['notProficientUsers'];
+                            $pu = $data['pUsers'];
+                            $apu = $data['almostPUsers'];
+                            $npu = $data['notPUsers'];
                            
 
 echo '<table class="table"><title>Proficiency Overview</title>
