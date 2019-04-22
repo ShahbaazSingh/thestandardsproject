@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Classes;
 use App\User;
 use DB;
+use Mail;
+use App\Mail\SendMailable; 
 
 class ProfileController extends Controller
 {
@@ -22,6 +24,9 @@ class ProfileController extends Controller
         //$this->middleware('checkuser');
     }
 
+    //This function tries to take a class id and subject, and tries to find what students are proficient,
+    //almost proficient and not proficient in that subject. I use a sql join operation and even return the count.
+    //This function is essential, and called multiple times throughout the controller.
 
     public function getProficiencyOverview($classid, $subject){
 
@@ -38,7 +43,7 @@ class ProfileController extends Controller
             if($subject == 'Math')
                 $proficiencyInitial = 'M';
             elseif($subject == 'English')
-                $proficiencyInitial = 'E';
+                $proficiencyInitial = 'E';      //since we only get the subject, we need to find the proficiency from it
             else if($subject == 'Science')
                 $proficiencyInitial = 'Sci'; 
             if($subject == 'Social Studies')
@@ -108,22 +113,12 @@ class ProfileController extends Controller
         
         $data = $this->getProficiencyOverview($classid, $selectedClass['subject']);
                             
-        /*$datag = [
-            'notProficientUsers'=>$notProficientUsers,
-            'notProficientCount'=>$notProficientCount,
-            'almostProficientUsers'=>$almostProficientUsers,
-            'almostProficientCount'=>$almostProficientCount,
-            'proficientUsers'=>$proficientUsers,
-            'proficientCount'=>$proficientCount,
-            'classid'=>$classid
-        ];*/                    
-
         session(['data' => $data]);
 
 
-        if($selectedClass['teacher_id'] == Auth::user()->id)
-            return view('profile')->with('data',$data);
-        else
+        if($selectedClass['teacher_id'] == Auth::user()->id)    //checks to make sure that the person accessing page
+            return view('profile')->with('data',$data);         //is the logged in user
+        else    
             return redirect('/');
         
     }
@@ -136,8 +131,8 @@ class ProfileController extends Controller
         if($subject == 'math')
             $selectedSubject = 'Math';
         elseif($subject == 'english')
-            $selectedSubject = 'English';
-        elseif($subject == 'science')
+            $selectedSubject = 'English';       //subject parameter is not the way it is in database so I 
+        elseif($subject == 'science')           //made sure it is
             $selectedSubject = 'Science';  
         elseif($subject == 'socialstudies')
             $selectedSubject = 'Social Studies';
@@ -146,8 +141,8 @@ class ProfileController extends Controller
 
         $selectedClass = Classes::where('class_id', $classid)->first();
         if($selectedClass['teacher_id'] == Auth::user()->id)
-            return view('profileSubject')->with(compact('data','subject','classid'));
-        else
+            return view('profileSubject')->with(compact('data','subject','classid'));   //with returns the data to a view
+        else    
             return redirect('/');
         
     }
@@ -172,7 +167,7 @@ class ProfileController extends Controller
         }
 
         elseif($prof == 1){
-            $student = $data['almostPUsers'];
+            $student = $data['almostPUsers'];       //student returns only the students with a specific proficiency
         }
 
         elseif($prof == 2){
@@ -190,15 +185,22 @@ class ProfileController extends Controller
     public function moduleprogress($id)
     {
         $gather = [];
-        $gather = DB::select('select *
+        $gather = DB::select('select *  
                                     from user_module um 
-                                    where um.assigned_by ='.$id.'
-                                    order by um.assigned');
+                                    where um.assigned_by ='.$id.'   
+                                    order by um.assigned');                 //this tries to find all modules assigned by $id
 
         if(Auth::user()->id == $id)
             return view('moduleprogress')->with('gather',$gather);
         else    
             return redirect('/');
+    }
+
+    public function emailUser()
+    {
+        $email = 'four@email.com';
+        Mail::to($email)->send(new SendMailable());
+        return view('/');
     }
 
 
@@ -207,7 +209,7 @@ class ProfileController extends Controller
     {
         $user = User::find(Auth::user()->id);
         $class = $user->classes;
-        if($class->find($classid) && $user->role == 0)
+        if($class->find($classid) && $user->role == 0)                          //first page of student 
             return view('profileStudent')->with('classid',$classid);
         else
             return redirect('/');
@@ -217,7 +219,7 @@ class ProfileController extends Controller
     {
         $data = [
             'type'=>$type,
-            'id'=>$id,
+            'id'=>$id,                                          //the module page itself
         ];
         return view('module')->with('data',$data);
     }

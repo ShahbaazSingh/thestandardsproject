@@ -22,7 +22,7 @@
                                 <tr>
                                     <th>Class Id</th>
                                     <th>Subject</th>
-                                    <th>Grade</th>
+                                    <th>Grade</th>                  
                                     <th>Starts</th>
                                     <th>Ends</th>
                                     <th>School</th>
@@ -31,6 +31,7 @@
                                 </thead>
                             '; 
                         
+                            //find the classes that are taught by teacher
                             $classes = App\Classes::where('teacher_id', Auth::user()->id)->get();
                             foreach ($classes as $class) {
                             
@@ -53,6 +54,8 @@
                             echo '<p><a href="#">Contacts List</a></p>';
                             
                         }
+
+                        //check is authenticated used is a student (I know, I should have done this in the home controller )
                         else if(Auth::user()->role == 0){
                             
                             echo 
@@ -113,10 +116,12 @@
                                 </tr>
                                 </thead>
                             '; 
+
+                            //find user in database assosciated with logged in user id
                         
                             $user = App\User::find(Auth::user()->id);
                             foreach ($user->classes as $class) {
-                            
+                            //print classes assosciated with student
                             echo '<tr>';
                             echo '<td><a href="pageonestudent/'.$class['class_id'].'">', $class['class_id'], '</a></td>';
                             echo '<td>', $class['subject'], '</td>';
@@ -130,6 +135,8 @@
                             
 
                         }
+
+                        //check if user is a principal
 
                         else if(Auth::user()->role == 2){
 

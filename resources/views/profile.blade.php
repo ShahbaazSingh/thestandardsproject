@@ -28,13 +28,14 @@
                             //gather information about how many students are proficient in a specific subject
                             $class = App\Classes::where('class_id', $data['classid'])->first();
 
+                            //math section
                             echo '<tr align="center" class="table-success" style="font-weight:bold">';
                             echo '<td align="left"><a';if($class['subject'] == 'Math') echo ' href="'.$class['class_id'].'/math"';echo '> Math </a></td>';
                             echo '<td>'.$data['pCount'].'</td>';
                             echo '<td>'.$data['almostPCount'].'</td>';
                             echo '<td>'.$data['notPCount'].'</td>';
                             echo '</tr>';
-
+                            
                             echo '<tr align="center" class="table-warning" style="font-weight:bold">';
                             echo '<td align="left"><a href="'.$class['class_id'].'/english"> English </a></td>';
                             echo '<td></td>';
