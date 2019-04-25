@@ -47,7 +47,7 @@ class UserTableSeeder extends Seeder
 
         User::create(array(
             'name'     => 'Sally Rogers',
-            'username' => 'studentone',
+            'username' => 'studentwon',
             'email'    => 'one@email.com',
             'password' => Hash::make('passwordone'),
             'grade' => 6,
@@ -208,9 +208,9 @@ class UserTableSeeder extends Seeder
             ));
 
         User::create(array(
-            'name'     => 'Sinclair Bushmaster',
-            'username' => 'studentnineteen',
-            'email'    => 'nineteen@email.com',
+            'name'     => 'Josh Sinclair',
+            'username' => 'studentone',
+            'email'    => 'studentone@email.com',
             'password' => Hash::make('passwordone'),
             'grade' => 6,
             'role' => 0,

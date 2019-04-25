@@ -21,8 +21,6 @@
                             $npu = $data['notPUsers'];
                            
 
-//this table is inverted so it showws which students are proficient, almost proficient, and not proficient by each column
-
 echo '<table class="table"><title>Proficiency Overview</title>
 <tr>
 <td>

@@ -33,13 +33,9 @@
 
                         echo  '<tbody>';    
 
-                        //controller returns $gather which is an array of module/user assosciations assigned by a specific teacher 
-                        
                         foreach($gather as $data){
 
-                            //get current module being printed
                             $module = App\Module::where('module_id', $data->module_id)->first();
-                            //get current student in relationship
                             $student = App\User::where('id', $data->user_id)->first();
 
                             echo '

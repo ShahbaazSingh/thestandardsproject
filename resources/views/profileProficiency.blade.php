@@ -25,7 +25,7 @@
                     else if($subject == 'socialstudies')
                         $currentProf = 'SS';         
                     
-                    //select information from database where the units of each proficiency is shown
+
                     $units = DB::select('select * from proficiency where w="'.$currentProf.'"');
 
                         echo '<table class = "table"><title>Individual Unit Proficiency</title>
@@ -71,27 +71,27 @@
                                 
 
 
-                                //actions to be performed, mostly just assigning modules
+                                //actions to be performed
 
                         echo '<br></br>';
                         echo '<br></br>';
 
-                        ?>
-
-                        <table class = "table"><title>Assign Modules></title>
+                        echo '<table class = "table"><Assign Modules></title>
                                      <thead> 
                                         <th>Modules</th>
                                      </thead>
 
                                     <tr>
-                                        <td>Intro to Adding Fractions Video <a href="{{ url('/email') }}" class="btn">Send</a></td>
+                                        <td>Intro to Adding Fractions Video <button>Send</button></td>
                                     </tr>
                                     <tr>
-                                        <td>Adding Fractions Multiple Choice <a href="{{ url('/email') }}" class="btn">Send</a></td>
+                                        <td>Adding Fractions Multiple Choice <button>Send</button></td>
                                     </tr>
+
+                        ';
                     
                         
-                    
+                    ?>
                 </div>
             </div>
         </div>
