@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Classes;
 use App\User;
 use DB;
+use DateTime;
 
 class ProfileController extends Controller
 {
@@ -102,7 +103,6 @@ class ProfileController extends Controller
      */
     public function pageOne($classid)
     {
-        session()->forget('data');
 
         $selectedClass = Classes::where('class_id', $classid)->first();
         
@@ -117,8 +117,6 @@ class ProfileController extends Controller
             'proficientCount'=>$proficientCount,
             'classid'=>$classid
         ];*/                    
-
-        session(['data' => $data]);
 
 
         if($selectedClass['teacher_id'] == Auth::user()->id)
@@ -200,9 +198,30 @@ class ProfileController extends Controller
         else    
             return redirect('/');
     }
+        //sends modules and inputs to db
+    public function sendModule($mod, $values)
+    {
+        $array = (array)json_decode($values);
+        $dtAssign = new DateTime();     
+        $dtDue = new DateTime();
+
+        $dtAssign = $dtAssign;
+        $dtAssign->format('Y-m-d');
+
+        $dtDue = $dtDue->modify('+7 days');
+        $dtDue->format('Y-m-d');
+
+        foreach($array as $a){
+            DB::table('user_module')->insert(array(
+                array('user_id' => $a, 'module_id' => $mod, 'assigned_by' => Auth::user()->id, 'grade' => NULL, 'assigned' => $dtAssign, 'due' => $dtDue, 'completed' => NULL, 'report_link' => '#'),
+            ));
+        }
+
+        return redirect()->route('home');
+    }
 
 
-
+    //returns student profile after dashboard
     public function pageOneStudent($classid)
     {
         $user = User::find(Auth::user()->id);
@@ -213,13 +232,31 @@ class ProfileController extends Controller
             return redirect('/');
     }
 
-    public function ModuleStudent($type, $id)
+    public function ModuleStudent($type, $id, $assignment_id)
     {
-        $data = [
-            'type'=>$type,
-            'id'=>$id,
-        ];
-        return view('module')->with('data',$data);
+        if(Auth::user()->role == 0){
+        if($id == 1)
+            return view('moduleone')->with('assignment_id',$assignment_id);
+        elseif($id == 2)
+            return view('moduletwo')->with('assignment_id',$assignment_id);
+        elseif($id == 3)
+            return view('modulethree')->with('assignment_id',$assignment_id);
+        elseif($id == 4)
+            return view('modulefour')->with('assignment_id',$assignment_id);    
+        }
     }
+
+    public function passModule($id)
+    {
+        $dateStored = DB::table('user_module')->select('completed')->where('id',$id)->first();
+        $date = $dateStored->completed;
+        $currentDate = date('Y-m-d');
+        if($date == '')
+            DB::update('update user_module set completed ="'.$currentDate.'", grade = 100 where id="'.$id.'"');
+
+
+        return redirect()->route('home');
+    }
+
 
 }

@@ -48,23 +48,33 @@
                             echo '</table>';
                             echo '<br></br>';
 
-                            echo '<p><a href="/moduleprogress/'.Auth::user()->id.'">Track Module Progress</a></p>';
-                            echo '<p><a href="#">Add Intervention</a></p>';
-                            echo '<p><a href="#">Contacts List</a></p>';
+                            echo '<p><a href="/moduleprogress/'.Auth::user()->id.'" class="btn btn-xs btn-info pull-right">Track Module Progress</a></p>';
+                            echo '<p><a href="#" class="btn btn-xs btn-info pull-right disabled">Add Intervention</a></p>';
+                            echo '<p><a href="#" class="btn btn-xs btn-info pull-right disabled">Contacts List</a></p>';
                             
                         }
                         else if(Auth::user()->role == 0){
                             
+                            $incomplete = 0;
+                            $user = App\User::find(Auth::user()->id);
+                            foreach($user->modules as $a){
+                                if($a->pivot->completed == '')
+                                    $incomplete++;
+                            }
+                            
+                            if($incomplete>0){
                             echo 
                             '<div class="alert alert-success" role="alert">
-                                You Have 1 New Module!
+                                You Have '.$incomplete.' New Module(s)!
                             </div>
                             ';
+                             }
 
                             echo '<h3>Module\'s List</h3>';
                             echo '<table class="table table-bordered table-dark" style="font-size:80%"><title>Module\'s List</title>
                                 <thead class = "thead-dark">
                                 <tr>
+                                    <th>Subject</th>
                                     <th>Date Assigned</th>
                                     <th>Date Due</th>
                                     <th>Type</th>
@@ -73,28 +83,32 @@
                                     <th>Status</th>
                                 </tr>
                                 </thead>
-                            
+                            ';
+                    
+                            foreach($user->modules as $a){
+                        
+                                echo'
                                 <tr>
-                                    <td>04-10-19</td>
-                                    <td>04-17-19</td>  
-                                    <td>Video</td>
-                                    <td><a href="/module/video/1">Long Division Video</a></td>
-                                    <td></td>
-                                    <td>In-Progress</td>
+                                    <td>'.$a->subject.'</td>
+                                    <td>'.$a->pivot->assigned.'</td>
+                                    <td>'.$a->pivot->due.'</td>  
+                                    <td>'.$a->type.'</td>
+                                    <td><a href="/module/'.$a->type.'/'.$a->module_id.'/'.$a->pivot->id.'">'.$a->name.'</a></td>
+                                    <td>'.$a->pivot->completed.'</td>
+                                ';
+                                if($a->pivot->completed == ''){
+                                    echo '<td>In-Progress</td>';
+                                }
+                                else {
+                                    echo '<td>Completed</td>';
+                                }
+                                echo'       
                                 </tr>
+     
+                            ';
 
-                                <tr>
-                                    <td>03-12-19</td>
-                                    <td>03-19-19</td>  
-                                    <td>Multiple-Choice</td>
-                                    <td><a href="/module/mc/2">Adding Fractions</a></td>
-                                    <td>03-17-19</td>  
-                                    <td>Completed</td>
-                                </tr>
-
-                                </table>
-
-                        '; 
+                            }
+                            echo '</table>';
 
 
                             echo '<br></br>';
@@ -118,7 +132,7 @@
                             foreach ($user->classes as $class) {
                             
                             echo '<tr>';
-                            echo '<td><a href="pageonestudent/'.$class['class_id'].'">', $class['class_id'], '</a></td>';
+                            echo '<td>'. $class['class_id']. '</td>';
                             echo '<td>', $class['subject'], '</td>';
                             echo '<td>', $class['grade'], '</td>';
                             echo '<td>', date('H:i:s', strtotime($class['starts_at'])), '</td>';
@@ -127,7 +141,6 @@
                             echo '<td>', $class['room'], '</td>';
                             echo '</tr>';
                             }
-                            
 
                         }
 

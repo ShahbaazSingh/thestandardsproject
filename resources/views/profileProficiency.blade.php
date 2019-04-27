@@ -45,7 +45,7 @@
                                 <tbody align="left">';
                                 foreach($student as $s){
                         echo    '<tr> 
-                                    <td><input type="checkbox"> '.$s->name.'</input></td>';
+                                    <td><input type="checkbox" value="'.$s->id.'"> '.$s->name.'</input></td>';
                                     foreach($units as $u){
 
                                                     $result = DB::table('user_proficiency')
@@ -68,30 +68,42 @@
                         echo    '</tbody>
                             </table>
                             ';
-                                
+                       
+                        ?>
 
 
-                                //actions to be performed
+                        <br></br>
+                        <br></br>
 
-                        echo '<br></br>';
-                        echo '<br></br>';
-
-                        echo '<table class = "table"><Assign Modules></title>
+                        <table class = "table"><Assign Modules></title>
                                      <thead> 
                                         <th>Modules</th>
                                      </thead>
 
                                     <tr>
-                                        <td>Intro to Adding Fractions Video <button>Send</button></td>
+                                        <td>Intro to Adding Fractions Video <a href = "#" onclick="redirectTo('3');" class="btn btn-xs btn-info pull-right">Send</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Adding Fractions Multiple Choice <button>Send</button></td>
+                                        <td>Adding Fractions Multiple Choice <a href = "#" onclick="redirectTo('4');" class="btn btn-xs btn-info pull-right">Send</a></td>
                                     </tr>
 
-                        ';
-                    
-                        
-                    ?>
+
+                                    
+                        <script>
+                            function redirectTo(mod){
+                            var values = [],
+                            inputs = document.getElementsByTagName("input");
+
+                            for (var i = inputs.length -1 ; i>= 0; i--){
+                                if (inputs[i].type === "checkbox" && inputs[i].checked)
+                                    values.push(inputs[i].value);
+                            }
+                                values = JSON.stringify(values);
+                                location.href="/"+mod+"/"+values;
+                        }
+                        </script>
+
+
                 </div>
             </div>
         </div>

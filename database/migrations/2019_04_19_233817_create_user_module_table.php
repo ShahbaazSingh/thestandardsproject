@@ -14,16 +14,17 @@ class CreateUserModuleTable extends Migration
     public function up()
     {
         Schema::create('user_module', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->biginteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->biginteger('module_id')->unsigned();
             $table->foreign('module_id')->references('module_id')->on('modules')->onDelete('cascade');
             $table->biginteger('assigned_by')->unsigned();
             $table->foreign('assigned_by')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('grade');
-            $table->date('assigned');
-            $table->date('due');
-            $table->date('completed');
+            $table->integer('grade')->nullable();
+            $table->date('assigned')->nullable();
+            $table->date('due')->nullable();
+            $table->date('completed')->nullable();
             $table->string('report_link');
 
         });

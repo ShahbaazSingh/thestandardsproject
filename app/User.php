@@ -46,7 +46,7 @@ class User extends Authenticatable
     }
 
     public function modules(){
-        return $this->belongsToMany('App\Module', 'user_module', 'user_id', 'module_id')->withPivot('grade','assigned','due','completed','report_link');
+        return $this->belongsToMany('App\Module', 'user_module', 'user_id', 'module_id')->withPivot('id','grade','assigned','due','completed','report_link')->orderBy('user_module.assigned', 'desc');
     }
 
 }
